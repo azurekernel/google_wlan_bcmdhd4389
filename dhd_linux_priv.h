@@ -544,11 +544,12 @@ do { \
 do { \
 	wakeup_source_unregister(wakeup_source); \
 } while (0);
-#define dhd_wake_lock(wakeup_source)			__pm_stay_awake(wakeup_source)
+
 #define dhd_wake_unlock(wakeup_source)			__pm_relax(wakeup_source)
 #define dhd_wake_lock_active(wakeup_source)		((wakeup_source)->active)
 #define dhd_wake_lock_timeout(wakeup_source, timeout)	\
 	__pm_wakeup_event(wakeup_source, jiffies_to_msecs(timeout))
+#define dhd_wake_lock(wakeup_source)			dhd_wake_lock_timeout(wakeup_source, 500)
 #endif /* CONFIG_HAS_WAKELOCK */
 
 #endif /* __DHD_LINUX_PRIV_H__ */
